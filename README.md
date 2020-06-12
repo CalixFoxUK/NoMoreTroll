@@ -1,3 +1,5 @@
+![image](https://repository-images.githubusercontent.com/271748811/d745c580-ac95-11ea-854d-7fc66c890cbf)
+
 # NoMoreTroll
 A fun little Freeze and tp mod for admins.
 
