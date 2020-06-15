@@ -1,51 +1,72 @@
 --[[
 	NoMoreTroll
-	Version 1.0.0.1
+	Version 1.0.0.2
 	By CalixFoxUK
 ]]--
 
-AddEventHandler('chatMessage', function(source, name, raw)
-	pedfreeze = source;
-	if type(raw) ~= "nil" then
-		cl = stringsplit(raw, " ");
-		if cl[1] == "/freeze" then
-			Can_Trigger = NoMoreTroll.CheckAce(source);
-			
-			if Can_Trigger then
-				CancelEvent();
-				isFreeze = true;
-				if type(cl[2]) ~= "nil" then
-					
-					if tonumber(cl[2]) ~= nil then
-						pedfreeze = cl[2];
-					end
-					
-					if type(cl[3]) ~= "nil" and cl[3] == "false" then
-						isFreeze = false;
-					end
-				end	
-				TriggerClientEvent('nomoretroll:freeze', pedfreeze, isFreeze, source);
-			else
-				if NoMoreTroll.Ace.Warn.Enabled then
+-- Freeze command freeze {PlayerID} {true/false}
+RegisterCommand("freeze", function(source, arg, raw)
+	if source > 0 then
+		pedfreeze = source;
+		if type(raw) ~= "nil" then
+			cl = stringsplit(raw, " ");
+			if cl[1] == "freeze" then
+				Can_Trigger = NoMoreTroll.CheckAce(source);
+				
+				if Can_Trigger then
 					CancelEvent();
-					TriggerClientEvent("nomoretroll:triggerwarning", source, true, 1);
+					isFreeze = true;
+					if type(cl[2]) ~= "nil" then
+						
+						if tonumber(cl[2]) ~= nil then
+							pedfreeze = cl[2];
+						end
+						
+						if type(cl[3]) ~= "nil" and cl[3] == "false" then
+							isFreeze = false;
+						end
+					end	
+					TriggerClientEvent('nomoretroll:freeze', pedfreeze, isFreeze, source);
+				else
+					if NoMoreTroll.Ace.Warn.Enabled then
+						CancelEvent();
+						TriggerClientEvent("nomoretroll:triggerwarning", source, true, 1);
+					end
 				end
 			end
 		end
-		-- Warn users
-		if cl[1] == "/wt" then
+	else
+		print("^2NoreMoreTroll^0: This function is for in-game admins, console admins will find it hard to talk and deal with users via console.");
+	end
+end, true)
+
+-- Warn Command wt {PlayerID}
+RegisterCommand("wt", function(source, arg, raw)
+	pedfreeze = source;
+	if type(raw) ~= "nil" then
+		cl = stringsplit(raw, " ");
+		if cl[1] == "wt" then
 			Can_Trigger = NoMoreTroll.CheckAce(source);
 			
 			if Can_Trigger then
 				CancelEvent();
 				GrabCL = type(tonumber(cl[2]));
 				if GrabCL == "number" then
+					print("^2NoMoreTroll^0: A warning sent to "..GetPlayerName(tonumber(cl[2])).."("..cl[2]..")");
 					TriggerClientEvent("nomoretroll:triggerwarning", tonumber(cl[2]), false, 4);
-				end	
+				end
 			end
 		end
-		-- TP to the player
-		if cl[1] == "/tpj" then
+	end
+end, true);
+
+-- This is the Telleport to Freeze player command /tpj and /tpj to return.
+RegisterCommand("tpj", function(source, arg, raw)
+	if source > 0 then
+	pedfreeze = source;
+	if type(raw) ~= "nil" then
+		cl = stringsplit(raw, " ");
+		if cl[1] == "tpj" then
 			Can_Trigger = NoMoreTroll.CheckAce(source);
 			
 			if Can_Trigger then
@@ -53,18 +74,32 @@ AddEventHandler('chatMessage', function(source, name, raw)
 				TriggerClientEvent('nomoretroll:tpjump', pedfreeze);
 			end
 		end
-		-- coming soon
-		if cl[1] == "/nomoretroll" then
+	end
+	else
+		print("^2NoMoreTroll^0: You can't telleport the server to the player!");
+	end
+end, true);
+
+-- About return
+RegisterCommand("nomoretroll", function(source, arg, raw)
+	pedfreeze = source;
+	if type(raw) ~= "nil" then
+		cl = stringsplit(raw, " ");
+		if cl[1] == "nomoretroll" then
 			Can_Trigger = NoMoreTroll.CheckAce(source);
 			
 			if Can_Trigger then
 				CancelEvent();
-				TriggerClientEvent('nomoretroll:about', pedfreeze, true);
+				if pedfreeze > 0 then
+					TriggerClientEvent('nomoretroll:about', pedfreeze, true);
+				else
+					print("^2NoMoreTroll^0:  Stop your basic troll in there tracks, with our new anti Troll formula.");
+					print("^2NoMoreTroll^0:  Created by CalixFoxUK");
+				end
 			end
 		end	
 	end
-	
-end)
+end, true)
 
 -- 
 RegisterServerEvent("nomoretroll:tpmsg")
@@ -78,11 +113,15 @@ function NoMoreTroll.CheckAce(source, trigger)
 	if type(source) == "nil" then
 		return false, true, "NoMoreTroll.CheckAce: bad argument #1 (number expected got nil)";
 	end
-	if NoMoreTroll.Ace.Enabled then	
-		return IsPlayerAceAllowed(source, "nomoretroll.admin"), false, "Passed";
+	if source > 0 then
+		if NoMoreTroll.Ace.Enabled then	
+			return IsPlayerAceAllowed(source, "nomoretroll.admin"), false, "Passed";
+		else
+			-- If NoMoreTroll.Ace.Enabled in the config dose not = true we auto set this as true as all users have permissions.
+			return true, false, "Passed";
+		end
 	else
-		-- If NoMoreTroll.Ace.Enabled in the config dose not = true we auto set this as true as all users have permissions.
-		return true, false, "Passed";
+		return true, false, "Passed"
 	end
 end
 
