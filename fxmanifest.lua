@@ -1,6 +1,6 @@
 --[[
 	NoMoreTroll
-	Version 1.0.0.1
+	Version 1.0.0.2
 	By CalixFoxUK
 ]]--
 
@@ -9,7 +9,7 @@ game 'gta5'
 
 author 'CalixFoxUK';
 description 'NoMoreTroll: Stop your basic troll in there tracks, with our new anti Troll formula.';
-version '1.0.0.1';
+version '1.0.0.2';
 
 server_scripts {
 	'config.lua',
