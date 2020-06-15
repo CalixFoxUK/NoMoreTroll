@@ -1,6 +1,6 @@
 --[[
 	NoMoreTroll
-	Version 1.0.0.2
+	Version 1.0.0.1
 	By CalixFoxUK
 ]]--
 
