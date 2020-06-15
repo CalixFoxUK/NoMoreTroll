@@ -1,21 +1,24 @@
 --[[
 	NoMoreTroll
-	Version 1.0.0.1
+	Version 1.0.0.2
 	By CalixFoxUK
 ]]--
 
 NoMoreTroll = {
 	-- This is the version of the script your running, I would advice you not changing this.
-	Version = "1.0.0.1",
+	Version = "1.0.0.2",
 	-- This sets the language for the script, defined in Dialect/lang.lua file.(future maybe)
 	Dialect = "en",
 	-- Me the creater, please don't remove thanks :D(Big Smilly Face)
 	Author = "CalixFoxUK",
 	-- Enable/Disable This Script without removing it from server.cfg
-	Enabled = true,																	
+	Enabled = true,
+	-- This version of the Ace is now a extra step and you can leve this false if you want, it might be removed in a future
+	-- version no you just need a admin with the command allow.
 	Ace = {
 		-- Enable/Disable the Ace support nomoretrol.admin add below to your server.cfg
 		-- add_ace group.admin nomoretroll.admin allow # give admins script admins.
+		-- in version 1.0.0.2 this becomes a sub group and you can enable this for extra level of admins
 		Enabled = false,	
 		-- In game dialogs related to Ace
 		Warn = {
